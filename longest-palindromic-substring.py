@@ -3,12 +3,14 @@
 """5. 最长回文子串(https://leetcode-cn.com/problems/longest-palindromic-substring/)
 """
 
+import unittest
 from typing import Tuple
 
 
 class Solution:
 
     def longestPalindrome(self, s: str) -> str:
+        """中心扩展解法"""
         pos = (0, 0)
         j = 0
         n = len(s)
@@ -33,13 +35,48 @@ class Solution:
             right += 1
         return L, R
 
+    def longestPalindrome_dp(self, s: str) -> str:
+        """动态规划解法"""
+        ls = len(s)
+        dp = [[0] * ls for i in range(ls)]
+        for i in range(ls):
+            dp[i][i] = 1
+
+        for j in range(ls):
+            for i in range(j):
+                dp[i][j] = int(s[i] == s[j])
+                if j - i > 1:
+                    dp[i][j] &= int(dp[i + 1][j - 1])
+
+        ret = [0, 0]
+        for i, arr in enumerate(dp):
+            for j, r in enumerate(arr):
+                if r and (j - i) > (ret[1] - ret[0]):
+                    ret = [i, j]
+        return s[ret[0]:ret[1] + 1]
+
+
+class TestSolution(unittest.TestCase):
+
+    def setUp(self) -> None:
+        self.inputs = [
+            ['', ''],
+            ['a', 'a'],
+            ['ac', 'a'],
+            ['kk', 'kk'],
+            ['cbbd', 'bb'],
+            ['babad', 'bab'],
+            ['wwabcdefgfedcbavv', 'abcdefgfedcba']
+        ]
+
+    def test_longestPalindrome(self):
+        for k, v in self.inputs:
+            self.assertEqual(Solution().longestPalindrome(k), v)
+
+    def test_longestPalindrome_dp(self):
+        for k, v in self.inputs:
+            self.assertEqual(Solution().longestPalindrome_dp(k), v)
+
 
 if __name__ == '__main__':
-    print(Solution().longestPalindrome(''))
-    print(Solution().longestPalindrome('a'))
-    print(Solution().longestPalindrome('ac'))
-    print(Solution().longestPalindrome('kk'))
-    print(Solution().longestPalindrome('cbbd'))
-    print(Solution().longestPalindrome('babad'))
-    print(Solution().longestPalindrome('wwabcdefgfedcbavv'))
-    print(Solution().longestPalindrome('abcdefg'))
+    unittest.main()
