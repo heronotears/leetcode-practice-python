@@ -52,8 +52,28 @@ def list2node(data: List, pos: int = None) -> Optional[ListNode]:
 
 
 def node2list(node: ListNode) -> List:
+    """链表转列表"""
     ret = []
     while node:
         ret.append(node.val)
         node = node.next
     return ret
+
+
+def list2tree(nums: List[int]) -> TreeNode:
+    """列表转二叉树"""
+    tree: List[TreeNode] = []
+    for i, v in enumerate(nums):
+        tree.append(None if v is None else TreeNode(v))
+
+    nt = len(tree)
+    j = 0
+    for i in range(nt):
+        if tree[i]:
+            left, right = j * 2 + 1, j * 2 + 2
+            if right >= nt:
+                break
+            tree[i].left = tree[left]
+            tree[i].right = tree[right]
+            j += 1
+    return tree[0]
