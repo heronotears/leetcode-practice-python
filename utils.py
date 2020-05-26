@@ -10,12 +10,8 @@ class TreeNode:
 
     def __init__(self, x):
         self.val = x
-        self.left = None
-        self.right = None
-
-    def __eq__(self, other: TreeNode) -> bool:
-        return (self.val == other.val and self.left == other.left and
-                self.right == other.right)
+        self.left: Optional[TreeNode] = None
+        self.right: Optional[TreeNode] = None
 
     def __repr__(self):
         return f'{self.__class__.__name__}({self.val})'
@@ -28,8 +24,8 @@ class ListNode:
         self.val = x
         self.next: Optional[ListNode] = None
 
-    def __eq__(self, other: ListNode) -> bool:
-        return self.val == other.val and self.next == other.next
+    # def __eq__(self, other: ListNode) -> bool:
+    #     return self.val == other.val and self.next == other.next
 
     def __repr__(self):
         return f'ListNode({self.val})'
