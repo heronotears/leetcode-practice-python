@@ -4,7 +4,7 @@
 """
 
 import unittest
-from typing import List
+from typing import Generator, List
 
 from utils import TreeNode
 
@@ -14,7 +14,7 @@ class Solution:
     def preorderTraversal(self, root: TreeNode) -> List[int]:
         return list(self.__preorderTraversal(root))
 
-    def __preorderTraversal(self, root: TreeNode) -> List[int]:
+    def __preorderTraversal(self, root: TreeNode) -> Generator[int, None, None]:
         stack: List[TreeNode] = []
         while root:
             yield root.val
