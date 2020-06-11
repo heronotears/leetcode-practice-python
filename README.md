@@ -1,1 +1,1 @@
-Leetcode practice
+Leetcode Practice(Python)
